@@ -1,6 +1,6 @@
-#include "TestInterface.h"
+#include "MainInterface.h"
 
-void TestInterface::init()
+void MainInterface::init()
 {
   // Create main screen
   mainScreen = lv_obj_create(NULL);
@@ -100,7 +100,7 @@ void TestInterface::init()
   updateSpeedLabel();
 }
 
-lv_obj_t *TestInterface::createJogButton(lv_obj_t *parent, const char *labelText, const char *userData)
+lv_obj_t *MainInterface::createJogButton(lv_obj_t *parent, const char *labelText, const char *userData)
 {
   lv_obj_t *btn = lv_btn_create(parent);
   lv_obj_set_size(btn, 70, 70);
@@ -114,7 +114,7 @@ lv_obj_t *TestInterface::createJogButton(lv_obj_t *parent, const char *labelText
   return btn;
 }
 
-float TestInterface::getCurrentDistance()
+float MainInterface::getCurrentDistance()
 {
   int32_t value = lv_slider_get_value(distanceSlider);
   switch (value)
@@ -134,7 +134,7 @@ float TestInterface::getCurrentDistance()
   }
 }
 
-int TestInterface::getCurrentSpeed()
+int MainInterface::getCurrentSpeed()
 {
   int32_t value = lv_slider_get_value(speedSlider);
   switch (value)
@@ -154,23 +154,23 @@ int TestInterface::getCurrentSpeed()
   }
 }
 
-void TestInterface::updateDistanceLabel()
+void MainInterface::updateDistanceLabel()
 {
   char buf[32];
   snprintf(buf, sizeof(buf), "Distance: %.1f mm", getCurrentDistance());
   lv_label_set_text(distanceLabel, buf);
 }
 
-void TestInterface::updateSpeedLabel()
+void MainInterface::updateSpeedLabel()
 {
   char buf[32];
   snprintf(buf, sizeof(buf), "Speed: %d mm/min", getCurrentSpeed());
   lv_label_set_text(speedLabel, buf);
 }
 
-void TestInterface::slider_event_cb(lv_event_t *e)
+void MainInterface::slider_event_cb(lv_event_t *e)
 {
-  TestInterface *self = (TestInterface *)lv_event_get_user_data(e);
+  MainInterface *self = (MainInterface *)lv_event_get_user_data(e);
   lv_obj_t *slider = (lv_obj_t *)lv_event_get_target(e);
 
   if (slider == self->distanceSlider)
@@ -183,9 +183,9 @@ void TestInterface::slider_event_cb(lv_event_t *e)
   }
 }
 
-void TestInterface::jogBtn_event_cb(lv_event_t *e)
+void MainInterface::jogBtn_event_cb(lv_event_t *e)
 {
-  TestInterface *self = (TestInterface *)lv_event_get_user_data(e);
+  MainInterface *self = (MainInterface *)lv_event_get_user_data(e);
   lv_obj_t *btn = (lv_obj_t *)lv_event_get_target(e);
   const char *dir = (const char *)lv_obj_get_user_data(btn);
 
@@ -215,15 +215,15 @@ void TestInterface::jogBtn_event_cb(lv_event_t *e)
   lv_label_set_text(self->statusLabel, response.c_str());
 }
 
-void TestInterface::homeBtn_event_cb(lv_event_t *e)
+void MainInterface::homeBtn_event_cb(lv_event_t *e)
 {
-  TestInterface *self = (TestInterface *)lv_event_get_user_data(e);
+  MainInterface *self = (MainInterface *)lv_event_get_user_data(e);
   self->grbl.sendCommand("$H"); // GRBL home command
   String response = self->grbl.waitForResponse();
   lv_label_set_text(self->statusLabel, response.c_str());
 }
 
-void TestInterface::update()
+void MainInterface::update()
 {
   // Add any periodic updates here if needed
 }

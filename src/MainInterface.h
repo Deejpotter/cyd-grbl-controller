@@ -1,11 +1,11 @@
 // TestInterface.h
-#ifndef TEST_INTERFACE_H
-#define TEST_INTERFACE_H
+#ifndef MAIN_INTERFACE_H
+#define MAIN_INTERFACE_H
 
 #include <lvgl.h>
 #include "GRBLController.h"
 
-class TestInterface
+class MainInterface
 {
 private:
   GRBLController &grbl;
@@ -34,7 +34,7 @@ private:
   lv_obj_t *createJogButton(lv_obj_t *parent, const char *labelText, const char *userData);
 
 public:
-  TestInterface(GRBLController &grblController) : grbl(grblController) {}
+  MainInterface(GRBLController &grblController) : grbl(grblController) {}
 
   void init();
   void update();
